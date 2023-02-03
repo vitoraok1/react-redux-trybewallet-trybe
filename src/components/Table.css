@@ -1,0 +1,20 @@
+div , table {
+  width: 50vw;
+}
+
+table {
+  margin-top: 1rem;
+}
+
+table , th {
+  border: 1px solid black;
+}
+
+th {
+  padding: 0.4rem;
+}
+
+thead , tfoot {
+  background-color: black;
+  color: white;
+}
