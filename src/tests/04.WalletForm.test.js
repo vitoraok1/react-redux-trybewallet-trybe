@@ -1,10 +1,54 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
+import { legacy_createStore as createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import userEvent from '@testing-library/user-event';
+import rootReducer from '../redux/reducers';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
 import Wallet from '../pages/Wallet';
+import mockData from './helpers/mockData';
+import App from '../App';
+
+const emailExample = 'trybe@trybe.com';
+const tagLint = 'Alimentação';
+
+const initialStateWithExpense = {
+  user: {
+    email: emailExample,
+  },
+  wallet: {
+    currencies: [],
+    expenses: [
+      {
+        id: 0,
+        value: '10',
+        description: 'McDonalds',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: tagLint,
+        exchangeRates: {
+          USD: {
+            ask: '5',
+            name: 'Dolar Americano/Real Brasileiro',
+          },
+        },
+      },
+    ],
+  },
+};
 
 describe('Verifica se o componente do formulário é renderizado dentro da rota da carteira', () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'fetch').mockResolvedValue({
+      json: () => mockData,
+    });
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it('Verifica se ao navegar para rota "/carteira" a mesma possui os componentes do formulário', () => {
     const initialEntries = ['/carteira'];
     const { history } = renderWithRouterAndRedux(<Wallet />, { initialEntries });
@@ -35,37 +79,43 @@ describe('Verifica se o componente do formulário é renderizado dentro da rota 
     expect(pathname).toBe('/carteira');
   });
 
-  it('Verifica se é possível adicionar uma nova despesa no estado global ao clicar no botão', () => {
-    const MOCK_INITAL_STATE = {
-      user: {
-        email: '',
-      },
-      wallet: {
-        currencies: [],
-        expenses: [],
-      },
-    };
-
-    const { store } = renderWithRouterAndRedux(
-      <Wallet />,
-      { initialState: MOCK_INITAL_STATE },
+  it('Verifica se ao adicionar uma nova despesa ela é adicionada ao estado global', async () => {
+    const store = createStore(
+      rootReducer,
+      initialStateWithExpense,
+      applyMiddleware(thunk),
     );
 
-    const expenseValue = screen.getByTestId('value-input');
-    expect(expenseValue).toBeDefined();
-    expect(expenseValue.value).toBe('');
+    await act(() => {
+      renderWithRouterAndRedux(<App />, { initialEntries: ['/carteira'], store });
+    });
 
-    const expenseDescr = screen.getByTestId('description-input');
-    expect(expenseDescr).toBeDefined();
-    expect(expenseDescr.value).toBe('');
-
-    userEvent.type(expenseValue, '10');
-    userEvent.type(expenseDescr, 'McDonalds');
     const addExpenseBtn = screen.getByRole('button', { name: /adicionar despesa/i });
-    userEvent.click(addExpenseBtn);
+    expect(addExpenseBtn).toBeDefined();
 
-    expect(store.getState()).toMatchObject(MOCK_INITAL_STATE);
+    const valueInput = screen.getByTestId('value-input');
+    const descriptionInput = screen.getByTestId('description-input');
+    const currency = screen.getByTestId('currency-input');
+    const methodSelected = screen.getByTestId('method-input');
+    const tagSelected = screen.getByTestId('tag-input');
 
-    // Preciso refazer essa parte do teste..
+    userEvent.type(valueInput, '10');
+    userEvent.type(descriptionInput, 'McDonalds');
+    userEvent.selectOptions(currency, 'USD');
+    userEvent.selectOptions(methodSelected, 'Dinheiro');
+    userEvent.selectOptions(tagSelected, tagLint);
+
+    act(() => {
+      userEvent.click(addExpenseBtn);
+    });
+
+    const { expenses } = store.getState().wallet;
+
+    expect(expenses).toHaveLength(1);
+    expect(expenses[0].value).toBe('10');
+    expect(expenses[0].description).toBe('McDonalds');
+    expect(expenses[0].currency).toBe('USD');
+    expect(expenses[0].method).toBe('Dinheiro');
+    expect(expenses[0].tag).toBe(tagLint);
   });
 });
