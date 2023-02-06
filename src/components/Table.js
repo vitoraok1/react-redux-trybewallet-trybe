@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteExpense } from '../redux/actions';
 import './Table.css';
 
 class Table extends Component {
+  handleDelete = (id) => {
+    const { dispatch } = this.props;
+    dispatch(deleteExpense(id));
+  };
+
   render() {
     const { expenses } = this.props;
     return (
@@ -24,12 +30,12 @@ class Table extends Component {
           </thead>
           <tbody>
             {
-              expenses && expenses.map((expense, index) => {
+              expenses && expenses.map((expense) => {
                 const {
-                  description, tag, method, value, exchangeRates, currency,
+                  id, description, tag, method, value, exchangeRates, currency,
                 } = expense;
                 return (
-                  <tr key={ index }>
+                  <tr key={ id }>
                     <td>
                       {description}
                     </td>
@@ -63,6 +69,8 @@ class Table extends Component {
                       </button>
                       <button
                         type="button"
+                        data-testid="delete-btn"
+                        onClick={ () => this.handleDelete(id) }
                       >
                         Excluir
                       </button>
@@ -86,6 +94,7 @@ Table.propTypes = {
     method: PropTypes.string,
     tag: PropTypes.string,
   })).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

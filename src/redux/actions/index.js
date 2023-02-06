@@ -1,6 +1,7 @@
 export const GET_USER = 'GET_USER';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const getUser = (email) => ({
   type: GET_USER,
@@ -48,3 +49,10 @@ export const addExpense = (values) => async (dispatch) => {
     },
   });
 };
+
+export const deleteExpense = (id) => ({
+  type: DELETE_EXPENSE,
+  payload: {
+    id,
+  },
+});
