@@ -1,8 +1,8 @@
-/* eslint-disable react/jsx-max-depth */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { deleteExpense, editExpense } from '../redux/actions';
+import TableHeader from './TableHeader';
 import './css/Table.css';
 
 class Table extends Component {
@@ -22,19 +22,7 @@ class Table extends Component {
       <section className="wallet-table">
         <div className="table">
           <table>
-            <thead>
-              <tr className="wallet-table-header">
-                <th>Descrição</th>
-                <th>Tag</th>
-                <th>Método de pagamento</th>
-                <th>Valor</th>
-                <th>Moeda</th>
-                <th>Câmbio utilizado</th>
-                <th>Valor convertido</th>
-                <th>Moeda de conversão</th>
-                <th>Editar/Excluir</th>
-              </tr>
-            </thead>
+            <TableHeader />
             <tbody>
               {
                 expenses && expenses.map((expense) => {
