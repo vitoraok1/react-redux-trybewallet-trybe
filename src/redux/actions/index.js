@@ -2,6 +2,8 @@ export const GET_USER = 'GET_USER';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const SAVED_EDITED_EXPENSE = 'SAVED_EDITED_EXPENSE';
 
 export const getUser = (email) => ({
   type: GET_USER,
@@ -56,3 +58,24 @@ export const deleteExpense = (id) => ({
     id,
   },
 });
+
+export const editExpense = (id) => ({
+  type: EDIT_EXPENSE,
+  payload: {
+    id,
+  },
+});
+
+export const saveEditedExpense = (expense) => {
+  const { value, description, currency, method, tag } = expense;
+  return {
+    type: SAVED_EDITED_EXPENSE,
+    payload: {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    },
+  };
+};
