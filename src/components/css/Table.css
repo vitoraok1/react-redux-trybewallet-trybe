@@ -1,0 +1,69 @@
+.wallet-table {
+  align-items: center;
+  background: #ff5866;
+  box-shadow: -4px 9px 13px rgba(233, 135, 216, 0.3);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  justify-content: flex-start;
+  min-height: 60vh;
+  overflow: hidden;
+  padding: 30px 0 0;
+  position: absolute;
+  top: calc((100vh - 30vh) / 2);
+  width: 85vw;
+}
+
+.table {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.wallet-table > .table > table {
+  width: 100%;
+}
+
+.wallet-table .table {
+  width: 75vw;
+}
+
+.wallet-table-header {
+  border-bottom: 2px solid white;
+}
+
+.wallet-table-header > th {
+  border-right: 1px solid white;
+  color: white;
+  font-size: 1vw;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  width: calc(75vw / 9);
+}
+
+.wallet-table-header > th:last-of-type {
+  border-right: none;
+}
+
+.button-edit-expense {
+  background-color: transparent;
+  border: none;
+  color: #003be5;
+  cursor: pointer;
+  margin: 0 10px;
+  padding: 0;
+  user-select: none;
+}
+
+.button-edit-expense:hover {
+  scale: 1.2;
+}
+
+.table table tr > td {
+  color: white;
+  font-size: 0.9vw;
+  padding: 10px 0;
+  text-align: center;
+  width: calc(75vw / 9);
+}

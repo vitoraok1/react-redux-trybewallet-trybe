@@ -1,0 +1,101 @@
+.wallet-form {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: -1rem;
+  padding: 0 2rem;
+  position: relative;
+  width: 60vw;
+}
+
+.wallet-form > .row {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.7rem 0;
+  position: relative;
+  width: 100%;
+}
+
+.wallet-form > .row label {
+  align-items: center;
+  color: #ff0062;
+  display: flex;
+  font-size: 1vw;
+  font-weight: 700;
+  line-height: 1vw;
+  margin: 0 5px;
+}
+
+.row select {
+  background-color: white;
+  border: 1px solid #003be5;
+  color: #748fe0;
+  font-size: 1vw;
+  font-style: normal;
+  font-weight: 700;
+  height: 30px;
+  line-height: 1vw;
+  margin: 0 0 0 1rem;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.row select:hover {
+  border: 2px solid #ff0062;
+  scale: 1.02;
+}
+
+.row select:focus {
+  border: 2px solid #ff0062;
+  outline: 0;
+}
+
+
+.row input {
+  background-color: white;
+  border: 1px solid #003be5;
+  color: #748fe0;
+  font-size: 1vw;
+  font-style: normal;
+  font-weight: 700;
+  height: 30px;
+  line-height: 1vw;
+  margin: 0 0 0 1rem;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.row input:hover {
+  border: 2px solid #ff0062;
+  scale: 1.02;
+}
+
+.row input:focus {
+  border: 2px solid #ff0062;
+  outline: 0;
+}
+
+.button-wallet-form {
+  background: #ff5866;
+  border: 1px solid  #ff5866;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  height: 40px;
+  line-height: 1rem;
+  margin: 30px 0;
+  text-align: center;
+  user-select: none;
+  width: 330px;
+}
+
+.button-wallet-form:hover {
+  border: 1px solid #ff6e6e;
+  opacity: 0.9;
+  scale: 1.03;
+}

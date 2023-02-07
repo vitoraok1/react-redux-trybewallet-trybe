@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getUser } from '../redux/actions';
+import './css/Login.css';
 
 class Login extends Component {
   state = {
@@ -47,35 +48,36 @@ class Login extends Component {
   render() {
     const { userEmail, userPassword, btnEnabled } = this.state;
     return (
-      <div>
-        <form>
-          <div>
-            <input
-              type="text"
-              data-testid="email-input"
-              placeholder="example@email.com"
-              onChange={ this.handleChange }
-              value={ userEmail }
-              name="userEmail"
-              required
-            />
-            <input
-              type="password"
-              data-testid="password-input"
-              placeholder="password"
-              onChange={ this.handleChange }
-              value={ userPassword }
-              name="userPassword"
-              required
-            />
-            <button
-              type="submit"
-              onClick={ this.handleClick }
-              disabled={ !btnEnabled }
-            >
-              Entrar
-            </button>
-          </div>
+      <div className="login-page">
+        <form className="login-form">
+          <input
+            type="text"
+            className="email-input"
+            data-testid="email-input"
+            placeholder="example@email.com"
+            onChange={ this.handleChange }
+            value={ userEmail }
+            name="userEmail"
+            required
+          />
+          <input
+            type="password"
+            className="password-input"
+            data-testid="password-input"
+            placeholder="password"
+            onChange={ this.handleChange }
+            value={ userPassword }
+            name="userPassword"
+            required
+          />
+          <button
+            type="submit"
+            className="button-login"
+            onClick={ this.handleClick }
+            disabled={ !btnEnabled }
+          >
+            Entrar
+          </button>
         </form>
       </div>
     );
